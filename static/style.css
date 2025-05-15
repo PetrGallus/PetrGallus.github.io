@@ -1,0 +1,129 @@
+/* === ZÁKLADNÍ VZHLED === */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to right, #141e30, #243b55);
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+/* === NAVIGACE === */
+nav {
+    background-color: #1f1f1f;
+    padding: 1em;
+    text-align: center;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #00ffcc;
+}
+
+/* === HLAVNÍ OBSAH === */
+.hero {
+    text-align: center;
+    padding: 3em 1em;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.hero h1 {
+    font-size: 2.5em;
+}
+
+.info, .table-section, .question-block {
+    max-width: 800px;
+    margin: 2em auto;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 2em;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+/* === SEZNAM === */
+.info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.info li {
+    padding: 0.5em 0;
+    font-size: 1.1em;
+}
+
+/* === TABULKA === */
+table {
+    width: 100%;
+    margin-top: 2em;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 0.8em;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+th {
+    background-color: #00ccaa;
+    color: #000;
+}
+
+/* === FORMULÁŘ === */
+input[type="submit"], button {
+    background-color: #00ffcc;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+input[type="submit"]:hover, button:hover {
+    background-color: #00ccaa;
+}
+
+/* === IKONY === */
+.fa-icon {
+    margin-right: 8px;
+    color: #00ffcc;
+}
+
+/* === VÝSLEDKY === */
+.fade-in {
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.centered-box {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 2em;
+    max-width: 600px;
+    margin: 3em auto;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.15);
+    backdrop-filter: blur(6px);
+    transition: 0.3s ease;
+}
+
+.centered-box:hover {
+    box-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
+    transform: scale(1.01);
+}
+
+.submit-btn {
+    text-align: center;
+}

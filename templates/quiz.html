@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Kvíz o webových aplikacích</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* ... ostatní styly zůstávají ... */
+
+        /* === MODÁLNÍ OKNO === */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+        }
+
+        .modal-content {
+            background-color: #1e1e2f;
+            margin: 15% auto;
+            padding: 2em;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/"><i class="fa fa-house"></i> Domů</a> |
+        <a href="/about"><i class="fa fa-user-secret"></i> O nás</a> |
+        <a href="/contact"><i class="fa fa-envelope"></i> Kontakt</a> |
+        <a href="/quiz"><i class="fa fa-question-circle"></i> Kvíz</a>
+    </nav>
+
+    <section class="quiz-intro centered-box">
+        <h1><i class="fa fa-terminal"></i> Kvíz o webových aplikacích</h1>
+        <p>🧠 Otestuj své znalosti v oblasti <strong>HTML, CSS, JavaScriptu i backendu</strong>.</p>
+        <p>✅ Každá otázka má jen jednu správnou odpověď – zvládneš to? 💪</p>
+    </section>
+    
+
+    <form method="POST" id="quiz-form" style="text-align: center;">
+        {% for q in questions %}
+            {% set q_index = loop.index0 %}
+            <div class="question-block" data-question-index="{{ q_index }}">
+                <p><strong>{{ loop.index }}.</strong> {{ q.question }}</p>
+                {% for key, value in q.options.items() %}
+                <label>
+                    <input type="radio" name="q{{ q_index }}" value="{{ key }}" required>
+                    {{ key }}) {{ value }}
+                </label>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        <input class="submit-btn" type="submit" value="🎯 Odeslat kvíz">
+    </form>
+
+    <!-- Výsledky -->
+    {% if result %}
+    <div id="resultModal" class="modal" style="display: block;">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('resultModal').style.display='none'">&times;</span>
+            <h2>{{ result }}</h2>
+            <p><i class="fa fa-trophy"></i> Skvělá práce! Pokračuj dál 🚀</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Správné odpovědi -->
+    {% if user_answers %}
+    <section class="quiz-results centered-box">
+        <h2>📋 Vyhodnocení odpovědí</h2>
+        {% for answer in user_answers %}
+        <div class="question_result"style="{{ 'margin-bottom: 1em; padding-left: 1em; border-left: 4px solid green;' if answer.is_correct else 'margin-bottom: 1em; padding-left: 1em; border-left: 4px solid red;' }}">
+
+                <p><strong>{{ loop.index }}. {{ answer.question }}</strong></p>
+                <ul>
+                    {% for key, val in answer.options.items() %}
+                        <li {% if key == answer.user_answer %}style="font-weight: bold;"{% endif %}>
+                            {{ key }} {{ val }}
+                            {% if key == answer.correct_answer %}
+                                <span style="color: green;">(správně)</span>
+                            {% endif %}
+                            {% if key == answer.user_answer and not answer.is_correct %}
+                                <span style="color: red;">(tvoje odpověď)</span>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    </section>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
